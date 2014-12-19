@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"><html><head><title>Mutt configuration [/home/ken/.muttrc]</title></head>
+
+<body>
+<pre><strong># Main- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong>
+<strong>#################################################</strong>
+
+<strong>#################################################</strong>
+set realname = "Ken Clark"
+my_hdr From: K Clark &lt;ken@klark.org&gt;
+<strong>#</strong>
+ignore *
+unignore From To Cc Subject Date Reply-To Organization X-Mailer User-Agent
+hdr_order From: Date: To: Cc: Subject:
+set editor="vim +':set textwidth=77' +':set wrap' +\`awk '/^$/ {print i+2;exit} {i++}' %s\` %s"
+set pager_index_lines=9
+bind compose \cx send-message
+set delete=yes          <strong># purge deleted messages without asking</strong>
+unset confirmappend     <strong># prompt for confirm when appending message to ex. mbox</strong>
+set autoedit = yes
+set move=no
+set folder=~/mail              <strong># where i keep my mailboxes</strong>
+set record=~/mail/sent-mail	<strong>#Turns on recording sent messages to outgoing.</strong>
+set sort=threads        <strong># sorting the mails in threads</strong>
+set sort_aux=date-sent  <strong># sort brother mails inside threads</strong>
+set beep_new
+<strong>#  MAILBOXES</strong>
+mailboxes /var/spool/mail/ken
+mailboxes /home/ken/mail/perl
+mailboxes /home/ken/mail/klark
+mailboxes /home/ken/mail/chug
+mailboxes /home/ken/mail/tommy
+<strong>#</strong>
+<strong>#</strong>
+<strong># GPG</strong>
+<strong>#set pgp_autosign</strong>
+set sig_dashes = no
+set timeout = 15
+set mail_check = 60
+set smileys = "(&gt;From )|(:[-^]?[][)(&gt;&lt;}{|/DP])" 
+
+set fast_reply = yes
+
+set sort_browser = reverse-alpha
+<strong>#</strong>
+<strong>#</strong>
+set pop_user = llamakc
+set pop_delete = yes
+set pop_host = spunge.org
+<strong>#</strong>
+<strong>#</strong>
+<strong>#set pop_user = llamakc</strong>
+<strong>#set pop_delete = yes</strong>
+<strong>#set pop_host = mail.charter.net</strong>
+set ispell = "aspell -e -c"
+
+set implicit_autoview
+auto_view text/html  application/x-pgp-message
+set mailcap_path="/etc/mailcap"
+set mailcap_sanitize=yes
+
+set include = yes
+<strong># Headers - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong>
+ignore X-Mozilla-Status X-Mozilla-Status2 X-Accept-Language Delivered-To X-UIDL X-MSMail-Priority X-MimeOLE In-Reply-To
+bind compose \cx send-message
+color normal white black
+color hdrdefault black    	  cyan
+color quoted     red          white
+color signature  brightblack  white
+color indicator  brightwhite  red
+color attachment black        green
+color error      red          white
+color message    blue         white
+color search     brightwhite  magenta
+color status     brightyellow blue
+color tree       red          white
+color normal     blue         white
+color tilde      green        white
+color bold       brightyellow white
+color markers    red          white
+color header      brightcyan   black      "^(from|subject):" <strong># header default</strong>
+color quoted            yellow blue        <strong># quoted text</strong>
+color signature   brightred    black       <strong># the signature (after sigdashes)</strong>
+color header brightwhite cyan "^(From|Subject):"
+color header red         cyan "^X-Junked-Because:"
+color index brightblue  white ~N
+color index brightgreen white "~N ~x bcr2925\.garnet\.acns\.fsu\.edu"
+color index red         white ~F
+color index black       green ~T
+color index brightwhite black ~D
+color body brightblue  white "(http|ftp|news|telnet|finger)://[^ \"\t\r\n]*"
+color body brightblue  white "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+color body brightblue  white "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+color body brightgreen white "&lt;[Gg]&gt;"               <strong># &lt;g&gt;</strong>
+color body brightgreen white "&lt;[Bb][Gg]&gt;"           <strong># &lt;bg&gt;</strong>
+color body brightgreen white " [;:]-*[)&gt;(&lt;|]"       <strong># :-) etc...</strong>
+color normal	white black
+color attachment brightyellow black
+color hdrdefault cyan black
+color indicator black green
+color markers	brightred black
+color quoted	green black
+color signature cyan black
+color status	brightgreen blue
+color tilde	blue black
+color tree	red black
+<strong>### include hack</strong>
+set include = ask-no
+<strong>### folder hooks</strong>
+<strong>#set signature="~/bin/.sig.unix|"</strong>
+set signature="~/.signature"
+<strong># GNUPG</strong>
+
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="/usr/lib/mutt/pgpewrap gpg -v --batch --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="/usr/lib/mutt/pgpewrap gpg --passphrase-fd 0 -v --batch --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_getkeys_command=""
+
+macro compose S "Fgpg -a --clearsign -u 0x7C828670"
+
+<strong>###</strong>
+<strong>### mailing lists</strong>
+<strong>###</strong>
+subscribe ugalinux@listserv.uga.edu
+<strong>#subscribe torturedpoets@topica.com</strong>
+subscribe abba@listserv.uga.edu
+subscribe beginners@perl.org
+set followup_to
+set honor_followup_to=yes
+<strong>###</strong>
+<strong>### macros</strong>
+<strong>###</strong>
+macro index "\Cx\Cb" "&lt;change-folder&gt;?"         <strong># Folder list.</strong>
+macro index "\Cx\Cs" "&lt;pipe-message&gt;cat &gt; ~/"   <strong># Save message</strong>
+macro index "\'"     "&lt;clear-flag&gt;r"            <strong># Mark as un-replied</strong>
+macro index "y"      "&lt;sync-mailbox&gt;&lt;change-folder&gt;?&lt;toggle-mailboxes&gt;" <strong># "-y" screen</strong>
+macro index "\Cb"    "&lt;pipe-message&gt;urlview&lt;enter&gt;"  <strong># URL viewer.</strong>
+macro index "\ep"    "&lt;change-folder&gt;=perl/&lt;tab&gt;&lt;enter&gt;"  <strong># List archives</strong>
+macro index "\el"    "&lt;change-folder&gt;=klark/&lt;tab&gt;&lt;enter&gt;" 
+macro index "\ec"    "&lt;change-folder&gt;=chug/&lt;tab&gt;&lt;enter&gt;" 
+macro index "\eb"    "&lt;change-folder&gt;=bcr/&lt;tab&gt;&lt;enter&gt;" 
+macro index "\ek"	 "&lt;change-folder&gt;=ken/&lt;tab&gt;&lt;enter&gt;"
+macro generic "\e?" "&lt;shell-escape&gt;less /usr/local/doc/mutt/manual.txt&lt;enter&gt;"
+macro index   "\e?" "&lt;shell-escape&gt;less /usr/local/doc/mutt/manual.txt&lt;enter&gt;"
+macro pager   "\e?" "&lt;shell-escape&gt;less /usr/local/doc/mutt/manual.txt&lt;enter&gt;"
+<strong>##</strong>
+<strong>##</strong>
+<strong>## added send-hook 6/20/02 klc</strong>
+<strong>#unmy_hdr </strong>
+<strong>#send-hook '~t ^robinson@quantifier\.org$' 'my_hdr To:&lt;bcr2925@garnet\.acns\.fsu\.edu&gt;' </strong>
+<strong>#send-hook '~t ^llamakc@spunge\.org' 'my_hdr To:&lt;llamakc@mac\.com&gt;' </strong>
+<strong>#send-hook '~f ^llamakc@spunge\.org' 'my_hdr To:&lt;llamakc@mac\.com'</strong>
+<strong># version</strong>
+push V
+
+
+
+</pre>
+</body></html>

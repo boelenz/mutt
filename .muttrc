@@ -1,0 +1,14 @@
+reset all
+source "~/.mail_config/mutt/mutt_aliases"
+source "~/.mail_config/mutt/mutt_mailboxes"
+source "~/.mail_config/mutt/source_colors"
+source "~/.mail_config/mutt/source_common"
+source "~/.mail_config/mutt/source_gmail"
+source "~/.mail_config/mutt/gpg.rc"
+alias Nathalie Nathalie van der Wal <njvanderwal@gmail.com>
+alias redactie rd <redactie-site-lia@googlegroups.com>
+alias rd Redactie <redactie-site-lia@googlegroups.com>
+macro attach B ":set pipe_decode\n|urlview\n:unsetpipe_decode\n" "Call urlview to extract URLs out of a message"
+macro pager B  ":set pipe_decode\n|urlview\n:unsetpipe_decode\n" "Call urlview to extract URLs out of a message"
+macro index B  ":set pipe_decode\n|urlview\n:unsetpipe_decode\n" "Call urlview to extract URLs out of a message"
+alias Joke Joke <J.back11@kpnmail.nl>

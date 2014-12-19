@@ -1,0 +1,56 @@
+#!/bin/sh
+
+sed -e '
+###
+# General stuff.
+
+# Kill trailing whitespace.  (And why is "+" not working??)
+/^-- $/!s/ \{1,\}$//
+
+# Some people do sigdashes improperly.
+s/^--$/-- /
+s/^=====$/-- /
+
+
+###
+# Destroy various mailing list and other footers.
+
+# Generic Yahoo Groups
+/^\(> \)*-\{24\} Yahoo! Groups Sponsor -\{20\}~-->$/,/^\(> \)*-\{68\}~->$/d
+/^Your use of Yahoo! Groups is subject to /d
+
+# generic mailman
+/^_\{47\}$/,/^http:\/\/.*\/mailman\/listinfo/d
+
+# Yahoo ads.
+/^_\{34\}$/,/^http:\/\/sitebuilder\.yahoo\.com$/d
+/^-\{33\}$/,/Yahoo! Health - Feel better, live better$/d
+/^_\{64\}$/,/visit www.juno.com to sign up today!$/d
+
+# Hotmail ads.
+/^_\{65\}$/,/^http:\/\/www\.hotmail\.com$/d
+
+# Lycos ads.
+/^_\{53\}$/,/^http:\/\/www\.mail\.lycos\.com\/brandPage\.shtml\?pageId=plus$/d
+/^_\{60\}$/,/http:\/\/www\.mail\.lycos\.com\/brandPage\.shtml\?pageId=plus$/d
+
+# seductive.com?
+/^_\{58\}$/,/^http:\/\/corp\.mail\.com\/careers\/$/d
+
+
+# baltwash-burning
+/^Baltwash-burning@egroups\.com \\o\//,/^Your use of Yahoo! Groups is subject to /d
+# burningass
+/^Playa del Fuego Home Page/,/^Your use of Yahoo! Groups is subject to /d
+# calefaction (will probably match other Yahoo lists)
+/^To unsubscribe from this group, send an email to:/,/^Your use of Yahoo! Groups is subject to /d
+# umbclinux
+/^\*\{59\}$/,/^unsub UMBCLINUX/d
+# baltolug
+/^=\{69\}$/,/^=\{69\}$/d
+
+# ARP has a long history of working in places with silly, expansive email
+# disclaimers.
+/^This e-mail (and any attachment) is intended only for the attention of the$/,/^forwarding e-mails and their contents.$/d
+/#\{64\}/,/#\{64\}/d
+'

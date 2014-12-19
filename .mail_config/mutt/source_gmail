@@ -1,0 +1,19 @@
+# Gmail information
+
+unset record 	# gmail does this automatically
+set postponed=+"Prive/drafts"
+unset signature
+
+# see ~/.msmtp for configuration
+set sendmail="/usr/sbin/sendmail"
+
+set from="ton.boelens@gmail.com"
+
+# Thread yourself
+# my_hdr bcc: ton.boelens@gmail.com
+
+# pgp settings
+unmy_hdr X-PGP-Key
+set pgp_autosign = no
+
+# vim: set ft=muttrc
